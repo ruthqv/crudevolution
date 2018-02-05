@@ -8,5 +8,8 @@
 
 - [Laravel](https://laravel.com/docs).
 
+## Complete Crud SPA example with pagination, filters and short, under MongoDB collections pattern & Bootstrap-Vue components
+- [DEMO HERE](http://examples.webandwebs.com/crud).
 
-- [DEMO HERE](http://examples.webandwebs.com).
+## Extending Crud to the infinite, adding your own fields on fly, with pagination, filters and short, under MongoDB collections pattern & Bootstrap-Vue components
+- [DEMO HERE](http://examples.webandwebs.com/crudevolution).

@@ -1,5 +1,7 @@
 <template>
-<div>	
+<div>
+  <h1>Extending Crud to the infinite....With Mongodb and Botstrap Components in Vue</h1>
+
   <b-container fluid>
     <div class="pull-right">
 	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">

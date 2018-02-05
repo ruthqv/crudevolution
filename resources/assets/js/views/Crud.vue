@@ -1,5 +1,7 @@
 <template>
-<div>	
+<div>
+  <h1>Complete Crud example with pagination, filters and short, using MongoDB & Bootstrap-Vue components</h1>
+
   <b-container fluid>
     <div class="pull-right">
 	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">

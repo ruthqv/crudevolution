@@ -53942,6 +53942,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 var items = window.items;
 
@@ -54444,6 +54446,12 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("h1", [
+        _vm._v(
+          "Extending Crud to the infinite....With Mongodb and Botstrap Components in Vue"
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "b-container",
         { attrs: { fluid: "" } },
@@ -55182,6 +55190,8 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 //
 //
 //
+//
+//
 
 var items = [{ "name": "Company1",
   "industry": "manufacturing" }];
@@ -55384,6 +55394,12 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("h1", [
+        _vm._v(
+          "Complete Crud example with pagination, filters and short, using MongoDB & Bootstrap-Vue components"
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "b-container",
         { attrs: { fluid: "" } },

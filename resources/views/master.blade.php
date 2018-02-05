@@ -31,7 +31,6 @@
        <section>
     <div class="container">
         <div class="row">
-            <h1>Extending Crud to the infinite....With Mongodb and Botstrap Components in Vue</h1>
             <div class="col-sm-12"> @yield('header')</div>
         </div>
     </div>
