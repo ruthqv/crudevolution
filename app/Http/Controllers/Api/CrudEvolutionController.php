@@ -16,7 +16,7 @@ class CrudEvolutionController extends Controller
     public function index()
     {
         $items =  DB::collection('crudevolutions')->get();
-        return view('main')->with('items');
+        return $items;
 
     }
 
@@ -87,6 +87,9 @@ class CrudEvolutionController extends Controller
      */
     public function destroy(CrudEvolution $crudevolution)
     {
-        //
+        CrudEvolution::find($crudevolution['_id'])->delete();
+        
+        $items =  DB::collection('crudevolutions')->get();
+        return $items;
     }
 }

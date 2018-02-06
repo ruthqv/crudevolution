@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/crudevolution', 'Api\CrudEvolutionController@index');
+// Route::get('/crudevolution', 'Api\CrudEvolutionController@index');
 // Route::get('/crud', 'Api\CrudController@index');
 Route::get('/{path?}', function(){
 	return view('main');

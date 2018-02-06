@@ -1,31 +1,34 @@
 <template>
 <div>
-  <h1>Complete Crud example with pagination, filters and short, using MongoDB & Bootstrap-Vue components</h1>
+  <div id="wrapper" class="">
+  <div class="overlay" style="display: none;"></div>
+  <div id="page-content-wrapper">
 
-  <b-container fluid>
-    <div class="pull-right">
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-	  Create Item
-	</button>
-    </div>
-
+  <b-container>
+<b-row> 
+<b-col md="12" class="text-center panel"> 
+  <h2>COMPLETE CRUD EXAMPLE</h2>
+  <p> With pagination, filters and short, using MongoDB & Bootstrap-Vue components</p>
+</b-col>  
+</b-row>
+<hr>
     <!-- User Interface controls -->
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Filter" class="mb-0">
-          <b-input-group>
-            <b-form-input v-model="filter" placeholder="Type to Search" />
+    <b-row class="text-center panel">
+      <b-col md="5">
+        <b-form-group  vertical label="Searcher" >
+          <b-input-group  class="form-inline">
+            <b-form-input v-model="filter" placeholder="Type here to Search" />
             <b-input-group-button>
-              <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+              <b-btn :disabled="!filter" @click="filter = ''" class="btn btn-main">Clear</b-btn>
             </b-input-group-button>
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Sort" class="mb-0">
-          <b-input-group>
+      <b-col md="5">
+        <b-form-group vertical label="Shorter">
+          <b-input-group  class="form-inline">
             <b-form-select v-model="sortBy" :options="sortOptions">
-              <option slot="first" :value="null">-- none --</option>
+              <option slot="first" :value="null">-- Short values --</option>
             </b-form-select>
             <b-input-group-button>
               <b-form-select :disabled="!sortBy" v-model="sortDesc">
@@ -36,19 +39,22 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col md="6" class="my-1">
-        <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
-      </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Per page" class="mb-0">
+
+      <b-col md="2">  
+        <b-form-group vertical label="Results" >
           <b-form-select :options="pageOptions" v-model="perPage" />
         </b-form-group>
       </b-col>
     </b-row>
 
+    <hr>
+  <button type="button" class="hamburger fadeInLeft is-closed btn btn-main" v-on:click="showLeftNav()" data-toggle="offcanvas">
+  CREATE ITEM
+  </button>
     <!-- Main table element -->
-    <b-table ref="table"
-    		 show-empty
+    <b-table class=""
+             ref="table"
+    		     show-empty
              stacked="md"
              :items="items"
              :fields="fields"
@@ -66,7 +72,7 @@
         </b-button>
 
 	     <b-button class="btn btn-primary" @click.prevent="editItem(row.item)">Edit</b-button>
-		<b-button class="btn btn-danger" @click.prevent="deleteItem(row.item)">Delete</b-button>
+		  <b-button class="btn btn-danger" @click.prevent="deleteItem(row.item)">Delete</b-button>
 
 
       </template>
@@ -90,50 +96,46 @@
         </b-card>
       </template>
     </b-table>
-
+      <b-col md="6">
+        <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
+      </b-col>
   </b-container>
+
+
 <!-- create -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+          <b-row>
+            <button type="button" data-toggle="offcanvas" class="pull-right hamburger animated fadeInLeft is-open" v-on:click="hideLeftNav()">
+                X
+            </button>
+          </b-row>
+ 
+            <b-row>
+             <div class="text-center padding2">
 
-    <!-- Create Item Modal -->
-		<div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Create Item</h4>
-		      </div>
-		      <div class="modal-body">
+		           <h4>Create Item</h4>
+     		      		<form method="POST" enctype="multipart/form-data" v-on:submit.prevent="createItem">
+            		      <div class="form-group">
+            						<label for="name">name:</label>
+            						<input type="text" name="name" class="form-control" v-model="newItem.name" />
+            						<span v-if="formErrors['name']" class="error text-danger">@{{ formErrors['name'] }}</span>
+            					</div>
 
+            					<div class="form-group">
+            						<label for="industry">industry:</label>
+            						<textarea name="description" class="form-control" v-model="newItem.industry"></textarea>
+            						<span v-if="formErrors['industry']" class="error text-danger">@{{ formErrors['industry'] }}</span>
+            					</div>
 
-		      		<form method="POST" enctype="multipart/form-data" v-on:submit.prevent="createItem">
+            					<div class="form-group">
+            						<button type="submit" class="btn btn-main">Submit</button>
+            					</div>
 
-
-		      <div class="form-group">
-						<label for="name">name:</label>
-						<input type="text" name="name" class="form-control" v-model="newItem.name" />
-						<span v-if="formErrors['name']" class="error text-danger">@{{ formErrors['name'] }}</span>
-					</div>
-
-
-					<div class="form-group">
-						<label for="industry">industry:</label>
-						<textarea name="description" class="form-control" v-model="newItem.industry"></textarea>
-						<span v-if="formErrors['industry']" class="error text-danger">@{{ formErrors['industry'] }}</span>
-					</div>
-
-
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">Submit</button>
-					</div>
-
-
-		      		</form>
-		        
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
+      		      	</form>
+            </div>
+		        </b-row>
+		</nav>
+<!-- endcreate -->
 
 
 <!-- edit -->
@@ -192,31 +194,40 @@
 		  </div>
 
 		</div>
+
+
+  <!-- end edit -->
+
+</div>
+</div>
 </div>
 </template>
 
 <script>
 const items = [
-  {"name": "Company1",
-  "industry":"manufacturing"}]
+  {"name": "",
+  "industry":""}]
+
 import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group';
 
 export default {
+
   data () {
     return {
-      allyears : this.getarray(),
+      items: items,
 
-      fillItem : {'name':'','industry':'', 'years':{} },
+      // allyears : this.getarray(),
+
+      fillItem : {'name':'','industry':'' },
  
-      newItem : {'name':'','industry':'', 'years':{}  },
+      newItem : {'name':'','industry':''},
 
       formErrors:{},
    	  formErrorsUpdate:{},
-      items: items,
       fields: [
-        { key: 'industry', label: 'industry', sortable: true  },
         { key: 'name', label: 'name', sortable: true },
-        { key: 'actions', label: 'Actions' }
+        { key: 'industry', label: 'industry', sortable: true  },
+        { key: 'actions', label: 'Actions', sortable: false   }
       ],
       currentPage: 1,
       perPage: 5,
@@ -228,14 +239,18 @@ export default {
       modalInfo: { title: '', content: '' }
     }
   },
-  mounted(){
+
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
     this.getItems()
-  	// this.getarray();
+
   },
-
+  watch: {
+    // call again the method if the route changes
+    '$route': 'getItems'
+  },
   computed: {
-
-
     sortOptions () {
       // Create an options list from our fields
       return this.fields
@@ -245,24 +260,6 @@ export default {
   },
   methods: {
 
-		getarray(){
-			var array =[]
-			for (let [key, val] of Object.entries(items)) {
-			// console.log(val)
-			  array.push(val.years);
-			}
-			// console.log(array)
-			return array
-		},
-
-  getItems: function(item){
-      this.$http.get('api/crud/').then(() => {
-      console.log(response.data)
-      this.items= response.data
-        
-        }, (response) => {
-        });
-    },
     resetModal () {
       this.modalInfo.title = ''
       this.modalInfo.content = ''
@@ -281,7 +278,27 @@ export default {
 
 	      $("#edit-item").modal('show');
 	  },
+    // getarray(){
+    //   var array =[]
+    //   for (let [key, val] of Object.entries(items)) {
+    //   // console.log(val)
+    //     array.push(val.years);
+    //   }
+    //   // console.log(array)
+    //   return array
+    // },
 
+    getItems: function(){
+        this.$http.get('api/crud/').then(function (response) {
+        this.items = response.data;
+        console.log(this.items);
+        })
+        .catch(function (response) {
+            console.log(response);
+            alert("Could not load datas");
+        });
+
+      },
       updateItem: function(item){
         var input = this.fillItem;
 
@@ -289,7 +306,7 @@ export default {
         this.$http.put('api/crud/'+ item.$oid, input).then((response) => {
         	this.items= response.data
         	// console.log(response)
-            $("#edit-item").modal('hide');
+          $("#edit-item").modal('hide');
 
    			 this.$refs.table.refresh();
 
@@ -304,52 +321,64 @@ export default {
 
         });
       },
+
+       showLeftNav:function(){
+        $('#wrapper').toggleClass('toggled');
+        $('.overlay').show();
+        $('.hamburger').addClass('is-open').removeClass('is-closed');
+      },
+
+       hideLeftNav:function(){
+        $('#wrapper').toggleClass('toggled');
+        $('.overlay').hide();
+        $('.hamburger').removeClass('is-open').addClass('is-closed');
+      },
+
         createItem: function(){
         	this.newItem.years =
-    {"2000" : {
-			"inversion_recived":"",
-			"capital" : "",
-			"sales" : "",
-			"employees" : ""
-		},
+          {"2000" : {
+      			"inversion_recived":"",
+      			"capital" : "",
+      			"sales" : "",
+      			"employees" : ""
+      		},
 
-		"2001" : {
-			"inversion_recived":"",
-			"capital" : "",
-			"sales" : "",
-			"employees" : ""
-		},
-		"2002" : {
-			"inversion_recived":"",
-			"capital" : "",
-			"sales" : "",
-			"employees" : ""
-		},
-		"2003" : {
-			"inversion_recived":"",
-			"capital" : "",
-			"sales" : "",
-			"employees" : ""
-		},		
-		"2004" : {
-			"inversion_recived":"",
-			"capital" : "",
-			"sales" : "",
-			"employees" : ""
-		},
-		"2005" : {
-			"inversion_recived":"",
-			"capital" : "",
-			"sales" : "",
-			"employees" : ""
-		}}
-        	console.log(this.newItem)
-		  var input = this.newItem;
+      		"2001" : {
+      			"inversion_recived":"",
+      			"capital" : "",
+      			"sales" : "",
+      			"employees" : ""
+      		},
+      		"2002" : {
+      			"inversion_recived":"",
+      			"capital" : "",
+      			"sales" : "",
+      			"employees" : ""
+      		},
+      		"2003" : {
+      			"inversion_recived":"",
+      			"capital" : "",
+      			"sales" : "",
+      			"employees" : ""
+      		},		
+      		"2004" : {
+      			"inversion_recived":"",
+      			"capital" : "",
+      			"sales" : "",
+      			"employees" : ""
+      		},
+      		"2005" : {
+      			"inversion_recived":"",
+      			"capital" : "",
+      			"sales" : "",
+      			"employees" : ""
+      		}
+        }		  
+      var input = this.newItem;
 		  this.$http.post('api/crud',input).then((response) => {
-        	this.items= response.data
-			$("#create-item").modal('hide');
-			this.$refs.table.refresh();
-
+      this.items= response.data
+      this.hideLeftNav()
+      this.$refs.table.refresh();
 		  }, (response) => {
 			this.formErrors = response.data;
 	    });
@@ -359,4 +388,5 @@ export default {
 	'b-input-group-button': bInputGroup
   }
 }
+
 </script>

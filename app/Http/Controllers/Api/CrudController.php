@@ -6,6 +6,7 @@ use App\Crud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class CrudController extends Controller
 {
@@ -17,7 +18,8 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $items =  DB::collection('cruds')->paginate(5);
+        $items =  DB::collection('cruds')->get();
+        // Log::info($items);
         return $items;
     }
 
@@ -39,6 +41,7 @@ class CrudController extends Controller
         // print_r($request->all());
 
         $create = Crud::create($request->all());  
+         // Log::info($create);
         $items =  DB::collection('cruds')->get();
         return $items;
     }
@@ -55,9 +58,9 @@ class CrudController extends Controller
     public function update(Request $request, Crud $crud)
     {
         // print_r($crud['_id']); die();
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required'
+        // ]);
         
         $data=$request->except(['_id']);
 

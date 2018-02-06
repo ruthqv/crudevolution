@@ -53944,9 +53944,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-var items = window.items;
-
+var items = [{ "name": "" }];
 // console.log(items)
 
 
@@ -53966,7 +54010,7 @@ var items = window.items;
 
       formErrors: {},
       formErrorsUpdate: {},
-      items: items,
+      items: null,
       fields: [{ key: 'name', label: 'name', sortable: true }, { key: 'actions', label: 'Actions' }],
       currentPage: 1,
       perPage: 5,
@@ -53977,6 +54021,11 @@ var items = window.items;
       filter: null,
       modalInfo: { title: '', content: '' }
     };
+  },
+  created: function created() {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.getItems();
   },
 
 
@@ -53991,6 +54040,15 @@ var items = window.items;
     }
   },
   methods: {
+    getItems: function getItems() {
+      this.$http.get('api/crudevolution/').then(function (response) {
+        this.items = response.data;
+        console.log(this.items);
+      }).catch(function (response) {
+        console.log(response);
+        alert("Could not load datas");
+      });
+    },
     resetModal: function resetModal() {
       this.modalInfo.title = '';
       this.modalInfo.content = '';
@@ -54017,7 +54075,7 @@ var items = window.items;
       var input = this.fillItem;
 
       console.log(this.fillItem.newyear);
-      this.$http.put('api/companyyears/' + item.$oid, input).then(function (response) {
+      this.$http.put('api/crudevolution/' + item.$oid, input).then(function (response) {
         _this.items = response.data;
         // console.log(response)
         $("#edit-item").modal('hide');
@@ -54031,26 +54089,21 @@ var items = window.items;
       var _this2 = this;
 
       console.log(item._id);
-      this.$http.delete('api/companyyears/' + item._id.$oid).then(function (response) {
+      this.$http.delete('api/crudevolution/' + item._id.$oid).then(function (response) {
         _this2.items = response.data;
       });
     },
     createItem: function createItem() {
       var _this3 = this;
 
-      // console.log(this.newField)
       Vue.http.options.emulateJSON = true;
       var formData = new FormData(document.getElementById('createDocument'));
 
-      // var input = this.newItem;
-      // console.log(formData)
-
-      this.$http.post('api/crud', formData).then(function (response) {
+      this.$http.post('api/crudevolution', formData).then(function (response) {
         // console.log(response)
-        // this.items= response.data
-        // $("#create-item").modal('hide');
-        // this.$refs.table.refresh();
-
+        _this3.items = response.data;
+        $("#create-item").modal('hide');
+        _this3.$refs.table.refresh();
       }, function (response) {
         _this3.formErrors = response.data;
       });
@@ -54446,47 +54499,35 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [
-        _vm._v(
-          "Extending Crud to the infinite....With Mongodb and Botstrap Components in Vue"
-        )
-      ]),
-      _vm._v(" "),
       _c(
         "b-container",
-        { attrs: { fluid: "" } },
         [
-          _c("div", { staticClass: "pull-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                attrs: {
-                  type: "button",
-                  "data-toggle": "modal",
-                  "data-target": "#create-item"
-                }
-              },
-              [_vm._v("\r\n\t  Create Item\r\n\t")]
-            )
+          _c("b-row", { staticClass: "text-center" }, [
+            _c("h2", [_vm._v("Advanced Crud")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                " Add fields that you need, With Mongodb and Botstrap Components in Vue"
+              )
+            ])
           ]),
+          _vm._v(" "),
+          _c("hr"),
           _vm._v(" "),
           _c(
             "b-row",
             [
               _c(
                 "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
+                { staticClass: "my-1", attrs: { md: "5" } },
                 [
                   _c(
                     "b-form-group",
-                    {
-                      staticClass: "mb-0",
-                      attrs: { horizontal: "", label: "Filter" }
-                    },
+                    { attrs: { vertical: "", label: "Filter" } },
                     [
                       _c(
                         "b-input-group",
+                        { staticClass: "form-inline" },
                         [
                           _c("b-form-input", {
                             attrs: { placeholder: "Type to Search" },
@@ -54505,6 +54546,7 @@ var render = function() {
                               _c(
                                 "b-btn",
                                 {
+                                  staticClass: "btn btn-main",
                                   attrs: { disabled: !_vm.filter },
                                   on: {
                                     click: function($event) {
@@ -54529,17 +54571,15 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
+                { staticClass: "my-1", attrs: { md: "5" } },
                 [
                   _c(
                     "b-form-group",
-                    {
-                      staticClass: "mb-0",
-                      attrs: { horizontal: "", label: "Sort" }
-                    },
+                    { attrs: { vertical: "", label: "Sort" } },
                     [
                       _c(
                         "b-input-group",
+                        { staticClass: "form-inline" },
                         [
                           _c(
                             "b-form-select",
@@ -54606,36 +54646,11 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
-                [
-                  _c("b-pagination", {
-                    staticClass: "my-0",
-                    attrs: {
-                      "total-rows": _vm.totalRows,
-                      "per-page": _vm.perPage
-                    },
-                    model: {
-                      value: _vm.currentPage,
-                      callback: function($$v) {
-                        _vm.currentPage = $$v
-                      },
-                      expression: "currentPage"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
+                { staticClass: "my-1", attrs: { md: "2" } },
                 [
                   _c(
                     "b-form-group",
-                    {
-                      staticClass: "mb-0",
-                      attrs: { horizontal: "", label: "Per page" }
-                    },
+                    { attrs: { vertical: "", label: "Per page" } },
                     [
                       _c("b-form-select", {
                         attrs: { options: _vm.pageOptions },
@@ -54656,6 +54671,23 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _c("b-row", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-main",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#create-item"
+                }
+              },
+              [_vm._v("\r\n    Create Item\r\n  ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("hr"),
           _vm._v(" "),
           _c("b-table", {
             ref: "table",
@@ -54745,238 +54777,404 @@ var render = function() {
                 }
               }
             ])
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "create-item",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "myModalLabel"
-          }
-        },
-        [
+          }),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "create-item",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "myModalLabel"
+              }
+            },
             [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c(
-                    "form",
-                    {
-                      attrs: {
-                        method: "POST",
-                        enctype: "multipart/form-data",
-                        id: "createDocument"
-                      },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          _vm.createItem($event)
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "name" } }, [
-                          _vm._v("name:")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.newItem.name,
-                              expression: "newItem.name"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", name: "name" },
-                          domProps: { value: _vm.newItem.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.newItem, "name", $event.target.value)
-                            }
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.formErrors["name"]
-                          ? _c("span", { staticClass: "error text-danger" }, [
-                              _vm._v("@" + _vm._s(_vm.formErrors["name"]))
-                            ])
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.addField,
-                            expression: "addField"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: "checkbox" },
-                        domProps: {
-                          checked: Array.isArray(_vm.addField)
-                            ? _vm._i(_vm.addField, null) > -1
-                            : _vm.addField
                         },
-                        on: {
-                          checked: function($event) {
-                            _vm.addField == true
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "h4",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "myModalLabel" }
+                        },
+                        [_vm._v("Create Item")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          attrs: {
+                            method: "POST",
+                            enctype: "multipart/form-data",
+                            id: "createDocument"
                           },
-                          change: function($event) {
-                            var $$a = _vm.addField,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = null,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.addField = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.addField = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.addField = $$c
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.createItem($event)
                             }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { attrs: { for: "checkbox" } }, [
-                        _vm._v("Add fields")
-                      ]),
-                      _vm._v(" "),
-                      _vm.addField == true
-                        ? _c(
-                            "div",
-                            [
-                              _c("label", { attrs: { for: "fieldsSize" } }, [
-                                _vm._v("How many fields?")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "select",
+                        },
+                        [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "name" } }, [
+                              _vm._v("name:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
                                 {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.fieldsSize,
-                                      expression: "fieldsSize"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  on: {
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.fieldsSize = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    }
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newItem.name,
+                                  expression: "newItem.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", name: "name" },
+                              domProps: { value: _vm.newItem.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                },
-                                _vm._l(_vm.fieldsNumber, function(fieldsSize) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: fieldsSize } },
-                                    [
-                                      _vm._v(
-                                        "\r\n                          " +
-                                          _vm._s(fieldsSize) +
-                                          "\r\n                        "
-                                      )
-                                    ]
+                                  _vm.$set(
+                                    _vm.newItem,
+                                    "name",
+                                    $event.target.value
                                   )
-                                })
-                              ),
-                              _vm._v(" "),
-                              _vm._l(_vm.fieldsSize, function(items) {
-                                return _c("div", [_c("NewField")], 1)
-                              })
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.formErrors["name"]
+                              ? _c(
+                                  "span",
+                                  { staticClass: "error text-danger" },
+                                  [_vm._v("@" + _vm._s(_vm.formErrors["name"]))]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.addField,
+                                expression: "addField"
+                              }
                             ],
-                            2
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._m(1)
-                    ]
-                  )
-                ])
-              ])
+                            attrs: { type: "checkbox", id: "checkbox" },
+                            domProps: {
+                              checked: Array.isArray(_vm.addField)
+                                ? _vm._i(_vm.addField, null) > -1
+                                : _vm.addField
+                            },
+                            on: {
+                              checked: function($event) {
+                                _vm.addField == true
+                              },
+                              change: function($event) {
+                                var $$a = _vm.addField,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.addField = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.addField = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.addField = $$c
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { attrs: { for: "checkbox" } }, [
+                            _vm._v("Add fields")
+                          ]),
+                          _vm._v(" "),
+                          _vm.addField == true
+                            ? _c(
+                                "div",
+                                [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "fieldsSize" } },
+                                    [_vm._v("How many fields?")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.fieldsSize,
+                                          expression: "fieldsSize"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.fieldsSize = $event.target
+                                            .multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        }
+                                      }
+                                    },
+                                    _vm._l(_vm.fieldsNumber, function(
+                                      fieldsSize
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: fieldsSize } },
+                                        [
+                                          _vm._v(
+                                            "\r\n                            " +
+                                              _vm._s(fieldsSize) +
+                                              "\r\n                          "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.fieldsSize, function(items) {
+                                    return _c("div", [_c("NewField")], 1)
+                                  })
+                                ],
+                                2
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Submit")]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "edit-item",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "myModalLabel"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "h4",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "myModalLabel" }
+                        },
+                        [_vm._v("Edit Item")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          attrs: {
+                            method: "POST",
+                            enctype: "multipart/form-data"
+                          },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.updateItem(_vm.fillItem._id)
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "name" } }, [
+                              _vm._v("name:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fillItem.name,
+                                  expression: "fillItem.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", name: "name" },
+                              domProps: { value: _vm.fillItem.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.fillItem,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.formErrorsUpdate["name"]
+                              ? _c(
+                                  "span",
+                                  { staticClass: "error text-danger" },
+                                  [
+                                    _vm._v(
+                                      "@" + _vm._s(_vm.formErrorsUpdate["name"])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Submit")]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            [
+              _c(
+                "b-col",
+                { staticClass: "my-1", attrs: { md: "6" } },
+                [
+                  _c("b-pagination", {
+                    staticClass: "my-0",
+                    attrs: {
+                      "total-rows": _vm.totalRows,
+                      "per-page": _vm.perPage
+                    },
+                    model: {
+                      value: _vm.currentPage,
+                      callback: function($$v) {
+                        _vm.currentPage = $$v
+                      },
+                      expression: "currentPage"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
           )
-        ]
+        ],
+        1
       )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title", attrs: { id: "myModalLabel" } }, [
-        _vm._v("Create Item")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-success", attrs: { type: "submit" } },
-        [_vm._v("Submit")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -54993,223 +55191,231 @@ if (false) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap_vue_es_components_input_group_input_group__ = __webpack_require__(25);
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var items = [{ "name": "",
+  "industry": "" }];
 
-var items = [{ "name": "Company1",
-  "industry": "manufacturing" }];
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      allyears: this.getarray(),
+      items: items,
 
-      fillItem: { 'name': '', 'industry': '', 'years': {} },
+      // allyears : this.getarray(),
 
-      newItem: { 'name': '', 'industry': '', 'years': {} },
+      fillItem: { 'name': '', 'industry': '' },
+
+      newItem: { 'name': '', 'industry': '' },
 
       formErrors: {},
       formErrorsUpdate: {},
-      items: items,
-      fields: [{ key: 'industry', label: 'industry', sortable: true }, { key: 'name', label: 'name', sortable: true }, { key: 'actions', label: 'Actions' }],
+      fields: [{ key: 'name', label: 'name', sortable: true }, { key: 'industry', label: 'industry', sortable: true }, { key: 'actions', label: 'Actions', sortable: false }],
       currentPage: 1,
       perPage: 5,
       totalRows: items.length,
@@ -55220,12 +55426,16 @@ var items = [{ "name": "Company1",
       modalInfo: { title: '', content: '' }
     };
   },
-  mounted: function mounted() {
+  created: function created() {
+    // fetch the data when the view is created and the data is
+    // already being observed
     this.getItems();
-    // this.getarray();
   },
 
-
+  watch: {
+    // call again the method if the route changes
+    '$route': 'getItems'
+  },
   computed: {
     sortOptions: function sortOptions() {
       // Create an options list from our fields
@@ -55237,52 +55447,6 @@ var items = [{ "name": "Company1",
     }
   },
   methods: {
-    getarray: function getarray() {
-      var array = [];
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = Object.entries(items)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _ref = _step.value;
-
-          var _ref2 = _slicedToArray(_ref, 2);
-
-          var key = _ref2[0];
-          var val = _ref2[1];
-
-          // console.log(val)
-          array.push(val.years);
-        }
-        // console.log(array)
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      return array;
-    },
-
-
-    getItems: function getItems(item) {
-      var _this = this;
-
-      this.$http.get('api/crud/').then(function () {
-        console.log(response.data);
-        _this.items = response.data;
-      }, function (response) {});
-    },
     resetModal: function resetModal() {
       this.modalInfo.title = '';
       this.modalInfo.content = '';
@@ -55302,33 +55466,64 @@ var items = [{ "name": "Company1",
 
       $("#edit-item").modal('show');
     },
+    // getarray(){
+    //   var array =[]
+    //   for (let [key, val] of Object.entries(items)) {
+    //   // console.log(val)
+    //     array.push(val.years);
+    //   }
+    //   // console.log(array)
+    //   return array
+    // },
 
+    getItems: function getItems() {
+      this.$http.get('api/crud/').then(function (response) {
+        this.items = response.data;
+        console.log(this.items);
+      }).catch(function (response) {
+        console.log(response);
+        alert("Could not load datas");
+      });
+    },
     updateItem: function updateItem(item) {
-      var _this2 = this;
+      var _this = this;
 
       var input = this.fillItem;
 
       console.log(this.fillItem.newyear);
       this.$http.put('api/crud/' + item.$oid, input).then(function (response) {
-        _this2.items = response.data;
+        _this.items = response.data;
         // console.log(response)
         $("#edit-item").modal('hide');
 
-        _this2.$refs.table.refresh();
+        _this.$refs.table.refresh();
       }, function (response) {
-        _this2.formErrorsUpdate = response.data;
+        _this.formErrorsUpdate = response.data;
       });
     },
     deleteItem: function deleteItem(item) {
-      var _this3 = this;
+      var _this2 = this;
 
       console.log(item._id);
       this.$http.delete('api/crud/' + item._id.$oid).then(function (response) {
-        _this3.items = response.data;
+        _this2.items = response.data;
       });
     },
+
+    showLeftNav: function showLeftNav() {
+      $('#wrapper').toggleClass('toggled');
+      $('.overlay').show();
+      $('.hamburger').addClass('is-open').removeClass('is-closed');
+    },
+
+    hideLeftNav: function hideLeftNav() {
+      $('#wrapper').toggleClass('toggled');
+      $('.overlay').hide();
+      $('.hamburger').removeClass('is-open').addClass('is-closed');
+    },
+
     createItem: function createItem() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.newItem.years = { "2000": {
           "inversion_recived": "",
@@ -55366,15 +55561,15 @@ var items = [{ "name": "Company1",
           "capital": "",
           "sales": "",
           "employees": ""
-        } };
-      console.log(this.newItem);
+        }
+      };
       var input = this.newItem;
       this.$http.post('api/crud', input).then(function (response) {
-        _this4.items = response.data;
-        $("#create-item").modal('hide');
-        _this4.$refs.table.refresh();
+        _this3.items = response.data;
+        _this3.hideLeftNav();
+        _this3.$refs.table.refresh();
       }, function (response) {
-        _this4.formErrors = response.data;
+        _this3.formErrors = response.data;
       });
     }
   },
@@ -55391,76 +55586,84 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [
-        _vm._v(
-          "Complete Crud example with pagination, filters and short, using MongoDB & Bootstrap-Vue components"
-        )
-      ]),
+  return _c("div", [
+    _c("div", { attrs: { id: "wrapper" } }, [
+      _c("div", { staticClass: "overlay", staticStyle: { display: "none" } }),
       _vm._v(" "),
       _c(
-        "b-container",
-        { attrs: { fluid: "" } },
+        "div",
+        { attrs: { id: "page-content-wrapper" } },
         [
-          _c("div", { staticClass: "pull-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                attrs: {
-                  type: "button",
-                  "data-toggle": "modal",
-                  "data-target": "#create-item"
-                }
-              },
-              [_vm._v("\r\n\t  Create Item\r\n\t")]
-            )
-          ]),
-          _vm._v(" "),
           _c(
-            "b-row",
+            "b-container",
             [
               _c(
-                "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
+                "b-row",
                 [
                   _c(
-                    "b-form-group",
-                    {
-                      staticClass: "mb-0",
-                      attrs: { horizontal: "", label: "Filter" }
-                    },
+                    "b-col",
+                    { staticClass: "text-center panel", attrs: { md: "12" } },
+                    [
+                      _c("h2", [_vm._v("COMPLETE CRUD EXAMPLE")]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          " With pagination, filters and short, using MongoDB & Bootstrap-Vue components"
+                        )
+                      ])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                { staticClass: "text-center panel" },
+                [
+                  _c(
+                    "b-col",
+                    { attrs: { md: "5" } },
                     [
                       _c(
-                        "b-input-group",
+                        "b-form-group",
+                        { attrs: { vertical: "", label: "Searcher" } },
                         [
-                          _c("b-form-input", {
-                            attrs: { placeholder: "Type to Search" },
-                            model: {
-                              value: _vm.filter,
-                              callback: function($$v) {
-                                _vm.filter = $$v
-                              },
-                              expression: "filter"
-                            }
-                          }),
-                          _vm._v(" "),
                           _c(
-                            "b-input-group-button",
+                            "b-input-group",
+                            { staticClass: "form-inline" },
                             [
+                              _c("b-form-input", {
+                                attrs: { placeholder: "Type here to Search" },
+                                model: {
+                                  value: _vm.filter,
+                                  callback: function($$v) {
+                                    _vm.filter = $$v
+                                  },
+                                  expression: "filter"
+                                }
+                              }),
+                              _vm._v(" "),
                               _c(
-                                "b-btn",
-                                {
-                                  attrs: { disabled: !_vm.filter },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.filter = ""
-                                    }
-                                  }
-                                },
-                                [_vm._v("Clear")]
+                                "b-input-group-button",
+                                [
+                                  _c(
+                                    "b-btn",
+                                    {
+                                      staticClass: "btn btn-main",
+                                      attrs: { disabled: !_vm.filter },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.filter = ""
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Clear")]
+                                  )
+                                ],
+                                1
                               )
                             ],
                             1
@@ -55470,78 +55673,105 @@ var render = function() {
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
-                [
+                  ),
+                  _vm._v(" "),
                   _c(
-                    "b-form-group",
-                    {
-                      staticClass: "mb-0",
-                      attrs: { horizontal: "", label: "Sort" }
-                    },
+                    "b-col",
+                    { attrs: { md: "5" } },
                     [
                       _c(
-                        "b-input-group",
+                        "b-form-group",
+                        { attrs: { vertical: "", label: "Shorter" } },
                         [
                           _c(
-                            "b-form-select",
-                            {
-                              attrs: { options: _vm.sortOptions },
-                              model: {
-                                value: _vm.sortBy,
-                                callback: function($$v) {
-                                  _vm.sortBy = $$v
-                                },
-                                expression: "sortBy"
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                {
-                                  attrs: { slot: "first" },
-                                  domProps: { value: null },
-                                  slot: "first"
-                                },
-                                [_vm._v("-- none --")]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "b-input-group-button",
+                            "b-input-group",
+                            { staticClass: "form-inline" },
                             [
                               _c(
                                 "b-form-select",
                                 {
-                                  attrs: { disabled: !_vm.sortBy },
+                                  attrs: { options: _vm.sortOptions },
                                   model: {
-                                    value: _vm.sortDesc,
+                                    value: _vm.sortBy,
                                     callback: function($$v) {
-                                      _vm.sortDesc = $$v
+                                      _vm.sortBy = $$v
                                     },
-                                    expression: "sortDesc"
+                                    expression: "sortBy"
                                   }
                                 },
                                 [
-                                  _c("option", { domProps: { value: false } }, [
-                                    _vm._v("Asc")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { domProps: { value: true } }, [
-                                    _vm._v("Desc")
-                                  ])
+                                  _c(
+                                    "option",
+                                    {
+                                      attrs: { slot: "first" },
+                                      domProps: { value: null },
+                                      slot: "first"
+                                    },
+                                    [_vm._v("-- Short values --")]
+                                  )
                                 ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-input-group-button",
+                                [
+                                  _c(
+                                    "b-form-select",
+                                    {
+                                      attrs: { disabled: !_vm.sortBy },
+                                      model: {
+                                        value: _vm.sortDesc,
+                                        callback: function($$v) {
+                                          _vm.sortDesc = $$v
+                                        },
+                                        expression: "sortDesc"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { domProps: { value: false } },
+                                        [_vm._v("Asc")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "option",
+                                        { domProps: { value: true } },
+                                        [_vm._v("Desc")]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
                               )
                             ],
                             1
                           )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { md: "2" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        { attrs: { vertical: "", label: "Results" } },
+                        [
+                          _c("b-form-select", {
+                            attrs: { options: _vm.pageOptions },
+                            model: {
+                              value: _vm.perPage,
+                              callback: function($$v) {
+                                _vm.perPage = $$v
+                              },
+                              expression: "perPage"
+                            }
+                          })
                         ],
                         1
                       )
@@ -55552,9 +55782,144 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "hamburger fadeInLeft is-closed btn btn-main",
+                  attrs: { type: "button", "data-toggle": "offcanvas" },
+                  on: {
+                    click: function($event) {
+                      _vm.showLeftNav()
+                    }
+                  }
+                },
+                [_vm._v("\r\n  CREATE ITEM\r\n  ")]
+              ),
+              _vm._v(" "),
+              _c("b-table", {
+                ref: "table",
+                attrs: {
+                  "show-empty": "",
+                  stacked: "md",
+                  items: _vm.items,
+                  fields: _vm.fields,
+                  "current-page": _vm.currentPage,
+                  "per-page": _vm.perPage,
+                  filter: _vm.filter,
+                  "sort-by": _vm.sortBy,
+                  "sort-desc": _vm.sortDesc
+                },
+                on: {
+                  "update:sortBy": function($event) {
+                    _vm.sortBy = $event
+                  },
+                  "update:sortDesc": function($event) {
+                    _vm.sortDesc = $event
+                  },
+                  filtered: _vm.onFiltered
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "actions",
+                    fn: function(row) {
+                      return [
+                        _c(
+                          "b-button",
+                          {
+                            attrs: { size: "sm" },
+                            on: {
+                              click: function($event) {
+                                $event.stopPropagation()
+                                row.toggleDetails($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\r\n          " +
+                                _vm._s(row.detailsShowing ? "Hide" : "Show") +
+                                " Details\r\n        "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            staticClass: "btn btn-primary",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.editItem(row.item)
+                              }
+                            }
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.deleteItem(row.item)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "row-details",
+                    fn: function(row) {
+                      return [
+                        _c("b-card", [
+                          _c("ul", [
+                            _c(
+                              "ul",
+                              { attrs: { id: "v-for-row.item.years" } },
+                              _vm._l(row.item.years, function(
+                                value,
+                                key,
+                                index
+                              ) {
+                                return _c(
+                                  "li",
+                                  _vm._b({}, "li", value, false),
+                                  [
+                                    _c("strong", [_vm._v(_vm._s(key))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "ul",
+                                      { attrs: { id: "v-for-value" } },
+                                      _vm._l(value, function(val, index) {
+                                        return _c("li", [
+                                          _c("strong", [_vm._v(_vm._s(index))]),
+                                          _vm._v(" : " + _vm._s(val))
+                                        ])
+                                      })
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          ])
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
               _c(
                 "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
+                { attrs: { md: "6" } },
                 [
                   _c("b-pagination", {
                     staticClass: "my-0",
@@ -55572,173 +55937,39 @@ var render = function() {
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-col",
-                { staticClass: "my-1", attrs: { md: "6" } },
-                [
-                  _c(
-                    "b-form-group",
-                    {
-                      staticClass: "mb-0",
-                      attrs: { horizontal: "", label: "Per page" }
-                    },
-                    [
-                      _c("b-form-select", {
-                        attrs: { options: _vm.pageOptions },
-                        model: {
-                          value: _vm.perPage,
-                          callback: function($$v) {
-                            _vm.perPage = $$v
-                          },
-                          expression: "perPage"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
               )
             ],
             1
           ),
           _vm._v(" "),
-          _c("b-table", {
-            ref: "table",
-            attrs: {
-              "show-empty": "",
-              stacked: "md",
-              items: _vm.items,
-              fields: _vm.fields,
-              "current-page": _vm.currentPage,
-              "per-page": _vm.perPage,
-              filter: _vm.filter,
-              "sort-by": _vm.sortBy,
-              "sort-desc": _vm.sortDesc
-            },
-            on: {
-              "update:sortBy": function($event) {
-                _vm.sortBy = $event
-              },
-              "update:sortDesc": function($event) {
-                _vm.sortDesc = $event
-              },
-              filtered: _vm.onFiltered
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "actions",
-                fn: function(row) {
-                  return [
-                    _c(
-                      "b-button",
-                      {
-                        attrs: { size: "sm" },
-                        on: {
-                          click: function($event) {
-                            $event.stopPropagation()
-                            row.toggleDetails($event)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\r\n          " +
-                            _vm._s(row.detailsShowing ? "Hide" : "Show") +
-                            " Details\r\n        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-button",
-                      {
-                        staticClass: "btn btn-primary",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.editItem(row.item)
-                          }
-                        }
-                      },
-                      [_vm._v("Edit")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.deleteItem(row.item)
-                          }
-                        }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  ]
-                }
-              },
-              {
-                key: "row-details",
-                fn: function(row) {
-                  return [
-                    _c("b-card", [
-                      _c("ul", [
-                        _c(
-                          "ul",
-                          { attrs: { id: "v-for-row.item.years" } },
-                          _vm._l(row.item.years, function(value, key, index) {
-                            return _c("li", _vm._b({}, "li", value, false), [
-                              _c("strong", [_vm._v(_vm._s(key))]),
-                              _vm._v(" "),
-                              _c(
-                                "ul",
-                                { attrs: { id: "v-for-value" } },
-                                _vm._l(value, function(val, index) {
-                                  return _c("li", [
-                                    _c("strong", [_vm._v(_vm._s(index))]),
-                                    _vm._v(" : " + _vm._s(val))
-                                  ])
-                                })
-                              )
-                            ])
-                          })
-                        )
-                      ])
-                    ])
-                  ]
-                }
-              }
-            ])
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "create-item",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "myModalLabel"
-          }
-        },
-        [
           _c(
-            "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            "nav",
+            {
+              staticClass: "navbar navbar-inverse navbar-fixed-top",
+              attrs: { id: "sidebar-wrapper", role: "navigation" }
+            },
             [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
+              _c("b-row", [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "pull-right hamburger animated fadeInLeft is-open",
+                    attrs: { type: "button", "data-toggle": "offcanvas" },
+                    on: {
+                      click: function($event) {
+                        _vm.hideLeftNav()
+                      }
+                    }
+                  },
+                  [_vm._v("\r\n                X\r\n            ")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("b-row", [
+                _c("div", { staticClass: "text-center padding2" }, [
+                  _c("h4", [_vm._v("Create Item")]),
+                  _vm._v(" "),
                   _c(
                     "form",
                     {
@@ -55823,175 +56054,224 @@ var render = function() {
                           : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _vm._m(1)
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-main",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("Submit")]
+                        )
+                      ])
                     ]
                   )
                 ])
               ])
-            ]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "edit-item",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "myModalLabel"
-          }
-        },
-        [
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "edit-item",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "myModalLabel"
+              }
+            },
             [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c(
-                    "form",
-                    {
-                      attrs: { method: "POST", enctype: "multipart/form-data" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          _vm.updateItem(_vm.fillItem._id)
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "name" } }, [
-                          _vm._v("name:")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.fillItem.name,
-                              expression: "fillItem.name"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", name: "name" },
-                          domProps: { value: _vm.fillItem.name },
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          attrs: {
+                            method: "POST",
+                            enctype: "multipart/form-data"
+                          },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.fillItem,
-                                "name",
-                                $event.target.value
-                              )
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.updateItem(_vm.fillItem._id)
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.formErrorsUpdate["name"]
-                          ? _c("span", { staticClass: "error text-danger" }, [
-                              _vm._v("@" + _vm._s(_vm.formErrorsUpdate["name"]))
-                            ])
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "industry" } }, [
-                          _vm._v("industry:")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.fillItem.industry,
-                              expression: "fillItem.industry"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", name: "industry" },
-                          domProps: { value: _vm.fillItem.industry },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.fillItem,
-                                "industry",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.formErrorsUpdate["industry"]
-                          ? _c("span", { staticClass: "error text-danger" }, [
-                              _vm._v(
-                                "@" + _vm._s(_vm.formErrorsUpdate["industry"])
-                              )
-                            ])
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.fillItem.years, function(value, key) {
-                        return _c(
-                          "div",
-                          _vm._b(
-                            { staticClass: "form-group" },
-                            "div",
-                            value,
-                            false
-                          ),
-                          [
-                            _c("label", { attrs: { for: "year" } }, [
-                              _vm._v(_vm._s(key))
+                        },
+                        [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "name" } }, [
+                              _vm._v("name:")
                             ]),
                             _vm._v(" "),
-                            _vm._l(value, function(va, ind) {
-                              return _c("div", { staticClass: "form-group" }, [
-                                _c("p", [
-                                  _c("strong", [_vm._v(_vm._s(ind))]),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.fillItem.years[key][ind],
-                                        expression: "fillItem.years[key][ind]"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      name: "fillItem.years[key][ind]"
-                                    },
-                                    domProps: {
-                                      value: _vm.fillItem.years[key][ind]
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.fillItem.years[key],
-                                          ind,
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fillItem.name,
+                                  expression: "fillItem.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", name: "name" },
+                              domProps: { value: _vm.fillItem.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.fillItem,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.formErrorsUpdate["name"]
+                              ? _c(
+                                  "span",
+                                  { staticClass: "error text-danger" },
+                                  [
+                                    _vm._v(
+                                      "@" + _vm._s(_vm.formErrorsUpdate["name"])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "industry" } }, [
+                              _vm._v("industry:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fillItem.industry,
+                                  expression: "fillItem.industry"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", name: "industry" },
+                              domProps: { value: _vm.fillItem.industry },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.fillItem,
+                                    "industry",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.formErrorsUpdate["industry"]
+                              ? _c(
+                                  "span",
+                                  { staticClass: "error text-danger" },
+                                  [
+                                    _vm._v(
+                                      "@" +
+                                        _vm._s(_vm.formErrorsUpdate["industry"])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.fillItem.years, function(value, key) {
+                            return _c(
+                              "div",
+                              _vm._b(
+                                { staticClass: "form-group" },
+                                "div",
+                                value,
+                                false
+                              ),
+                              [
+                                _c("label", { attrs: { for: "year" } }, [
+                                  _vm._v(_vm._s(key))
                                 ]),
+                                _vm._v(" "),
+                                _vm._l(value, function(va, ind) {
+                                  return _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("p", [
+                                        _c("strong", [_vm._v(_vm._s(ind))]),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.fillItem.years[key][ind],
+                                              expression:
+                                                "fillItem.years[key][ind]"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "text",
+                                            name: "fillItem.years[key][ind]"
+                                          },
+                                          domProps: {
+                                            value: _vm.fillItem.years[key][ind]
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.fillItem.years[key],
+                                                ind,
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm.formErrorsUpdate["years"]
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass: "error text-danger"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "@" +
+                                                  _vm._s(
+                                                    _vm.formErrorsUpdate[
+                                                      "years"
+                                                    ]
+                                                  )
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                }),
                                 _vm._v(" "),
                                 _vm.formErrorsUpdate["years"]
                                   ? _c(
@@ -56007,76 +56287,28 @@ var render = function() {
                                       ]
                                     )
                                   : _vm._e()
-                              ])
-                            }),
-                            _vm._v(" "),
-                            _vm.formErrorsUpdate["years"]
-                              ? _c(
-                                  "span",
-                                  { staticClass: "error text-danger" },
-                                  [
-                                    _vm._v(
-                                      "@" +
-                                        _vm._s(_vm.formErrorsUpdate["years"])
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
-                          ],
-                          2
-                        )
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3)
-                    ],
-                    2
-                  )
-                ])
-              ])
+                              ],
+                              2
+                            )
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                ]
+              )
             ]
           )
-        ]
+        ],
+        1
       )
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title", attrs: { id: "myModalLabel" } }, [
-        _vm._v("Create Item")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-success", attrs: { type: "submit" } },
-        [_vm._v("Submit")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -56181,7 +56413,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     mode: 'history',
 
     routes: [{
-        path: '/',
+        path: '/crudevolution',
         name: 'crudevolution',
         component: __WEBPACK_IMPORTED_MODULE_2__views_CrudEvolution_vue___default.a
     }, {

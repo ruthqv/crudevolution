@@ -12,7 +12,7 @@ export default new VueRouter({
 
 
         {
-            path: '/',
+            path: '/crudevolution',
             name: 'crudevolution',
             component: CrudEvolution
         },

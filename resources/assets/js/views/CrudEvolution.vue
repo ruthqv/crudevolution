@@ -1,29 +1,27 @@
 <template>
 <div>
-  <h1>Extending Crud to the infinite....With Mongodb and Botstrap Components in Vue</h1>
 
-  <b-container fluid>
-    <div class="pull-right">
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-	  Create Item
-	</button>
-    </div>
-
+  <b-container>
+  <b-row class="text-center">
+  <h2>Advanced Crud</h2>
+  <p> Add fields that you need, With Mongodb and Botstrap Components in Vue</p>
+  </b-row>
+<hr>
     <!-- User Interface controls -->
     <b-row>
-      <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Filter" class="mb-0">
-          <b-input-group>
+      <b-col md="5" class="my-1">
+        <b-form-group vertical label="Filter">
+          <b-input-group  class="form-inline">
             <b-form-input v-model="filter" placeholder="Type to Search" />
             <b-input-group-button>
-              <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+              <b-btn :disabled="!filter" @click="filter = ''" class="btn btn-main">Clear</b-btn>
             </b-input-group-button>
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Sort" class="mb-0">
-          <b-input-group>
+      <b-col md="5" class="my-1">
+        <b-form-group vertical label="Sort">
+          <b-input-group  class="form-inline">
             <b-form-select v-model="sortBy" :options="sortOptions">
               <option slot="first" :value="null">-- none --</option>
             </b-form-select>
@@ -36,19 +34,22 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col md="6" class="my-1">
-        <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
-      </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Per page" class="mb-0">
+
+      <b-col md="2" class="my-1">
+        <b-form-group vertical label="Per page">
           <b-form-select :options="pageOptions" v-model="perPage" />
         </b-form-group>
       </b-col>
     </b-row>
-
+  <b-row>
+  <button type="button" class="btn btn-main" data-toggle="modal" data-target="#create-item">
+    Create Item
+  </button>
+  </b-row>
+<hr>
     <!-- Main table element -->
     <b-table ref="table"
-    		 show-empty
+    		    show-empty
              stacked="md"
              :items="items"
              :fields="fields"
@@ -79,10 +80,8 @@
       </template>
     </b-table>
 
-  </b-container>
-<!-- create -->
 
-    <!-- Create Item Modal -->
+<!-- create -->
 		<div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -105,17 +104,17 @@
               <input type="checkbox" id="checkbox" v-model="addField" v-on:checked="addField ==true">            
                   <label for="checkbox">Add fields</label>
             
-            <div v-if="addField == true">
-                    <label for="fieldsSize">How many fields?</label>
-                      <select v-model="fieldsSize"  class="form-control" >
-                        <option v-for="fieldsSize in fieldsNumber" v-bind:value="fieldsSize">
-                          {{ fieldsSize }}
-                        </option>
-                      </select>
-              <div v-for="items in fieldsSize" >
-                <NewField></NewField>
-              </div>
-              </div>
+              <div v-if="addField == true">
+                      <label for="fieldsSize">How many fields?</label>
+                        <select v-model="fieldsSize"  class="form-control" >
+                          <option v-for="fieldsSize in fieldsNumber" v-bind:value="fieldsSize">
+                            {{ fieldsSize }}
+                          </option>
+                        </select>
+                <div v-for="items in fieldsSize" >
+                  <NewField></NewField>
+                </div>
+                </div>
 
 
     					<div class="form-group">
@@ -130,17 +129,60 @@
 		  </div>
 		</div>
 
+<!-- End create -->
+
+<!-- Edit -->
+    <div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="myModalLabel">Edit Item</h4>
+          </div>
+          <div class="modal-body">
+
+
+              <form method="POST" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem._id)">
+
+
+              <div class="form-group">
+                  <label for="name">name:</label>
+                <input type="text" name="name" class="form-control" v-model="fillItem.name" />
+                <span v-if="formErrorsUpdate['name']" class="error text-danger">@{{ formErrorsUpdate['name'] }}</span>
+              </div>
+
+            
+
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+
+
+              </form>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+<!-- end Edit -->
+<b-row>
+      <b-col md="6" class="my-1">
+        <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
+      </b-col>
+</b-row>
+  </b-container>
 
 </div>
+
 </template>
 
 <script>
-const items = window.items
-
-
-
-
- // console.log(items)
+const items =  [
+  {"name": ""}]
+// console.log(items)
 
 import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group';
 import NewField from '../components/CrudEvolution/NewField.vue';
@@ -159,7 +201,7 @@ export default {
 
       formErrors:{},
    	  formErrorsUpdate:{},
-      items: items,
+      items: null,
       fields: [
         { key: 'name', label: 'name', sortable: true },
         { key: 'actions', label: 'Actions' }
@@ -174,7 +216,12 @@ export default {
       modalInfo: { title: '', content: '' }
     }
   },
- 
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.getItems()
+
+  }, 
 
 
   computed: {
@@ -188,7 +235,17 @@ export default {
     }
   },
   methods: {
+    getItems: function(){
+        this.$http.get('api/crudevolution/').then(function (response) {
+        this.items = response.data;
+        console.log(this.items);
+        })
+        .catch(function (response) {
+            console.log(response);
+            alert("Could not load datas");
+        });
 
+      },
     resetModal () {
       this.modalInfo.title = ''
       this.modalInfo.content = ''
@@ -212,7 +269,7 @@ export default {
         var input = this.fillItem;
 
        	console.log(this.fillItem.newyear)
-        this.$http.put('api/companyyears/'+ item.$oid, input).then((response) => {
+        this.$http.put('api/crudevolution/'+ item.$oid, input).then((response) => {
         	this.items= response.data
         	// console.log(response)
             $("#edit-item").modal('hide');
@@ -225,24 +282,20 @@ export default {
       },
       deleteItem: function(item){
       	console.log(item._id)
-        this.$http.delete('api/companyyears/'+item._id.$oid).then((response) => {
+        this.$http.delete('api/crudevolution/'+item._id.$oid).then((response) => {
         	this.items= response.data
 
         });
       },
         createItem: function(){
-		  // console.log(this.newField)
       Vue.http.options.emulateJSON = true;
       let formData = new FormData(document.getElementById('createDocument'));
 
-      // var input = this.newItem;
-      // console.log(formData)
-
-		  this.$http.post('api/crud', formData).then((response) => {
+		    this.$http.post('api/crudevolution', formData).then((response) => {
         // console.log(response)
-      // this.items= response.data
-			// $("#create-item").modal('hide');
-			// this.$refs.table.refresh();
+        this.items= response.data
+			   $("#create-item").modal('hide');
+			   this.$refs.table.refresh();
 
 		  }, (response) => {
 			this.formErrors = response.data;
