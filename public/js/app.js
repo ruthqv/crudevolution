@@ -55408,7 +55408,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 var newItem = { "name": "",
@@ -55603,743 +55602,497 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { attrs: { id: "wrapper" } }, [
-        _c("div", { staticClass: "overlay", staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c(
-          "div",
-          { attrs: { id: "page-content-wrapper" } },
-          [
-            _c(
-              "b-container",
-              [
-                _c(
-                  "b-row",
-                  [
-                    _c(
-                      "b-col",
-                      { staticClass: "text-center panel", attrs: { md: "12" } },
-                      [
-                        _c("h2", [_vm._v("COMPLETE CRUD EXAMPLE")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            " With pagination, filters and short, using MongoDB & Bootstrap-Vue components"
-                          )
-                        ])
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c(
-                  "b-row",
-                  { staticClass: "text-center panel" },
-                  [
-                    _c(
-                      "b-col",
-                      { attrs: { md: "5" } },
-                      [
-                        _c(
-                          "b-form-group",
-                          { attrs: { vertical: "", label: "Searcher" } },
-                          [
-                            _c(
-                              "b-input-group",
-                              { staticClass: "form-inline" },
-                              [
-                                _c("b-form-input", {
-                                  attrs: { placeholder: "Type here to Search" },
-                                  model: {
-                                    value: _vm.filter,
-                                    callback: function($$v) {
-                                      _vm.filter = $$v
-                                    },
-                                    expression: "filter"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "b-input-group-button",
-                                  [
-                                    _c(
-                                      "b-btn",
-                                      {
-                                        staticClass: "btn btn-main",
-                                        attrs: { disabled: !_vm.filter },
-                                        on: {
-                                          click: function($event) {
-                                            _vm.filter = ""
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Clear")]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
+  return _c("div", [
+    _c("div", { attrs: { id: "wrapper" } }, [
+      _c("div", { staticClass: "overlay", staticStyle: { display: "none" } }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { attrs: { id: "page-content-wrapper" } },
+        [
+          _c(
+            "b-container",
+            [
+              _c(
+                "b-row",
+                [
+                  _c(
+                    "b-col",
+                    { staticClass: "text-center panel", attrs: { md: "12" } },
+                    [
+                      _c("h2", [_vm._v("COMPLETE CRUD EXAMPLE")]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          " With pagination, filters and short, using MongoDB & Bootstrap-Vue components"
                         )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-col",
-                      { attrs: { md: "5" } },
-                      [
-                        _c(
-                          "b-form-group",
-                          { attrs: { vertical: "", label: "Shorter" } },
-                          [
-                            _c(
-                              "b-input-group",
-                              { staticClass: "form-inline" },
-                              [
-                                _c(
-                                  "b-form-select",
-                                  {
-                                    attrs: { options: _vm.sortOptions },
-                                    model: {
-                                      value: _vm.sortBy,
-                                      callback: function($$v) {
-                                        _vm.sortBy = $$v
-                                      },
-                                      expression: "sortBy"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "option",
-                                      {
-                                        attrs: { slot: "first" },
-                                        domProps: { value: null },
-                                        slot: "first"
-                                      },
-                                      [_vm._v("-- Short values --")]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "b-input-group-button",
-                                  [
-                                    _c(
-                                      "b-form-select",
-                                      {
-                                        attrs: { disabled: !_vm.sortBy },
-                                        model: {
-                                          value: _vm.sortDesc,
-                                          callback: function($$v) {
-                                            _vm.sortDesc = $$v
-                                          },
-                                          expression: "sortDesc"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "option",
-                                          { domProps: { value: false } },
-                                          [_vm._v("Asc")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "option",
-                                          { domProps: { value: true } },
-                                          [_vm._v("Desc")]
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-col",
-                      { attrs: { md: "2" } },
-                      [
-                        _c(
-                          "b-form-group",
-                          { attrs: { vertical: "", label: "Results" } },
-                          [
-                            _c("b-form-select", {
-                              attrs: { options: _vm.pageOptions },
-                              model: {
-                                value: _vm.perPage,
-                                callback: function($$v) {
-                                  _vm.perPage = $$v
-                                },
-                                expression: "perPage"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "hamburger fadeInLeft is-closed btn btn-main",
-                    attrs: { type: "button", "data-toggle": "offcanvas" },
-                    on: {
-                      click: function($event) {
-                        _vm.showLeftNav()
-                      }
-                    }
-                  },
-                  [_vm._v("\r\n  CREATE ITEM\r\n  ")]
-                ),
-                _vm._v(" "),
-                _c("b-table", {
-                  ref: "table",
-                  attrs: {
-                    "show-empty": "",
-                    stacked: "md",
-                    items: _vm.items,
-                    fields: _vm.fields,
-                    "current-page": _vm.currentPage,
-                    "per-page": _vm.perPage,
-                    filter: _vm.filter,
-                    "sort-by": _vm.sortBy,
-                    "sort-desc": _vm.sortDesc
-                  },
-                  on: {
-                    "update:sortBy": function($event) {
-                      _vm.sortBy = $event
-                    },
-                    "update:sortDesc": function($event) {
-                      _vm.sortDesc = $event
-                    },
-                    filtered: _vm.onFiltered
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "actions",
-                      fn: function(row) {
-                        return [
+                      ])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                { staticClass: "text-center panel" },
+                [
+                  _c(
+                    "b-col",
+                    { attrs: { md: "5" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        { attrs: { vertical: "", label: "Searcher" } },
+                        [
                           _c(
-                            "b-button",
-                            {
-                              attrs: { size: "sm" },
-                              on: {
-                                click: function($event) {
-                                  $event.stopPropagation()
-                                  row.toggleDetails($event)
-                                }
-                              }
-                            },
+                            "b-input-group",
+                            { staticClass: "form-inline" },
                             [
-                              _vm._v(
-                                "\r\n          " +
-                                  _vm._s(row.detailsShowing ? "Hide" : "Show") +
-                                  " Details\r\n        "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "b-button",
-                            {
-                              staticClass: "btn btn-primary",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.editItem(row.item)
+                              _c("b-form-input", {
+                                attrs: { placeholder: "Type here to Search" },
+                                model: {
+                                  value: _vm.filter,
+                                  callback: function($$v) {
+                                    _vm.filter = $$v
+                                  },
+                                  expression: "filter"
                                 }
-                              }
-                            },
-                            [_vm._v("Edit")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "b-button",
-                            {
-                              staticClass: "btn btn-danger",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.deleteItem(row.item)
-                                }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          )
-                        ]
-                      }
-                    },
-                    {
-                      key: "row-details",
-                      fn: function(row) {
-                        return [
-                          _c("b-card", [
-                            _c("ul", [
+                              }),
+                              _vm._v(" "),
                               _c(
-                                "ul",
-                                { attrs: { id: "v-for-row.item.years" } },
-                                _vm._l(row.item.years, function(
-                                  value,
-                                  key,
-                                  index
-                                ) {
-                                  return _c(
-                                    "li",
-                                    _vm._b({}, "li", value, false),
+                                "b-input-group-button",
+                                [
+                                  _c(
+                                    "b-btn",
+                                    {
+                                      staticClass: "btn btn-main",
+                                      attrs: { disabled: !_vm.filter },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.filter = ""
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Clear")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { md: "5" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        { attrs: { vertical: "", label: "Shorter" } },
+                        [
+                          _c(
+                            "b-input-group",
+                            { staticClass: "form-inline" },
+                            [
+                              _c(
+                                "b-form-select",
+                                {
+                                  attrs: { options: _vm.sortOptions },
+                                  model: {
+                                    value: _vm.sortBy,
+                                    callback: function($$v) {
+                                      _vm.sortBy = $$v
+                                    },
+                                    expression: "sortBy"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    {
+                                      attrs: { slot: "first" },
+                                      domProps: { value: null },
+                                      slot: "first"
+                                    },
+                                    [_vm._v("-- Short values --")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-input-group-button",
+                                [
+                                  _c(
+                                    "b-form-select",
+                                    {
+                                      attrs: { disabled: !_vm.sortBy },
+                                      model: {
+                                        value: _vm.sortDesc,
+                                        callback: function($$v) {
+                                          _vm.sortDesc = $$v
+                                        },
+                                        expression: "sortDesc"
+                                      }
+                                    },
                                     [
-                                      _c("strong", [_vm._v(_vm._s(key))]),
+                                      _c(
+                                        "option",
+                                        { domProps: { value: false } },
+                                        [_vm._v("Asc")]
+                                      ),
                                       _vm._v(" "),
                                       _c(
-                                        "ul",
-                                        { attrs: { id: "v-for-value" } },
-                                        _vm._l(value, function(val, index) {
-                                          return _c("li", [
-                                            _c("strong", [
-                                              _vm._v(_vm._s(index))
-                                            ]),
-                                            _vm._v(" : " + _vm._s(val))
-                                          ])
-                                        })
+                                        "option",
+                                        { domProps: { value: true } },
+                                        [_vm._v("Desc")]
                                       )
                                     ]
                                   )
-                                })
+                                ],
+                                1
                               )
-                            ])
-                          ])
-                        ]
-                      }
-                    }
-                  ])
-                }),
-                _vm._v(" "),
-                _c(
-                  "b-col",
-                  { attrs: { md: "6" } },
-                  [
-                    _c("b-pagination", {
-                      staticClass: "my-0",
-                      attrs: {
-                        "total-rows": _vm.totalRows,
-                        "per-page": _vm.perPage
-                      },
-                      model: {
-                        value: _vm.currentPage,
-                        callback: function($$v) {
-                          _vm.currentPage = $$v
-                        },
-                        expression: "currentPage"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "nav",
-              {
-                staticClass: "navbar navbar-inverse navbar-fixed-top",
-                attrs: { id: "sidebar-wrapper", role: "navigation" }
-              },
-              [
-                _c("b-row", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "pull-right hamburger animated fadeInLeft is-open",
-                      attrs: { type: "button", "data-toggle": "offcanvas" },
-                      on: {
-                        click: function($event) {
-                          _vm.hideLeftNav()
-                        }
-                      }
-                    },
-                    [_vm._v("\r\n                X\r\n            ")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("b-row", [
-                  _c("div", { staticClass: "text-center padding2" }, [
-                    _c("h4", [_vm._v("Create Item")]),
-                    _vm._v(" "),
-                    _c(
-                      "form",
-                      {
-                        attrs: {
-                          method: "POST",
-                          enctype: "multipart/form-data"
-                        },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            _vm.createItem($event)
-                          }
-                        }
-                      },
-                      [
-                        _vm._l(_vm.newItem, function(item, index, value) {
-                          return _c("div", [
-                            index != "years"
-                              ? _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "index" } }, [
-                                    _vm._v(_vm._s(index))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.newItem[index],
-                                        expression: "newItem[index]"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { type: "text", name: "index" },
-                                    domProps: { value: _vm.newItem[index] },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.newItem,
-                                          index,
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.formErrors["index"]
-                                    ? _c(
-                                        "span",
-                                        { staticClass: "error text-danger" },
-                                        [
-                                          _vm._v(
-                                            "@" +
-                                              _vm._s(_vm.formErrors["index"])
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            index == "years"
-                              ? _c(
-                                  "div",
-                                  { staticClass: "form-group" },
-                                  _vm._l(item, function(
-                                    years,
-                                    indexyears,
-                                    value
-                                  ) {
-                                    return _c(
-                                      "div",
-                                      [
-                                        _c(
-                                          "label",
-                                          { attrs: { for: "index" } },
-                                          [_vm._v(_vm._s(indexyears))]
-                                        ),
-                                        _vm._v(" "),
-                                        _vm._l(years, function(
-                                          year,
-                                          indexvals
-                                        ) {
-                                          return _c("div", [
-                                            _c(
-                                              "label",
-                                              { attrs: { for: "indexvals" } },
-                                              [_vm._v(_vm._s(indexvals))]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value:
-                                                    _vm.newItem.years[
-                                                      indexyears
-                                                    ][indexvals],
-                                                  expression:
-                                                    "newItem.years[indexyears][indexvals]"
-                                                }
-                                              ],
-                                              staticClass: "form-control",
-                                              attrs: {
-                                                type: "text",
-                                                name: "indexvals"
-                                              },
-                                              domProps: {
-                                                value:
-                                                  _vm.newItem.years[indexyears][
-                                                    indexvals
-                                                  ]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    _vm.newItem.years[
-                                                      indexyears
-                                                    ],
-                                                    indexvals,
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _vm.formErrors["indexvals"]
-                                              ? _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "error text-danger"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "@" +
-                                                        _vm._s(
-                                                          _vm.formErrors[
-                                                            "indexvals"
-                                                          ]
-                                                        )
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ])
-                                        })
-                                      ],
-                                      2
-                                    )
-                                  })
-                                )
-                              : _vm._e()
-                          ])
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-main",
-                              attrs: { type: "submit" }
-                            },
-                            [_vm._v("Submit")]
+                            ],
+                            1
                           )
-                        ])
-                      ],
-                      2
-                    )
-                  ])
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade",
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { md: "2" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        { attrs: { vertical: "", label: "Results" } },
+                        [
+                          _c("b-form-select", {
+                            attrs: { options: _vm.pageOptions },
+                            model: {
+                              value: _vm.perPage,
+                              callback: function($$v) {
+                                _vm.perPage = $$v
+                              },
+                              expression: "perPage"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "hamburger fadeInLeft is-closed btn btn-main",
+                  attrs: { type: "button", "data-toggle": "offcanvas" },
+                  on: {
+                    click: function($event) {
+                      _vm.showLeftNav()
+                    }
+                  }
+                },
+                [_vm._v("\r\n  CREATE ITEM\r\n  ")]
+              ),
+              _vm._v(" "),
+              _c("b-table", {
+                ref: "table",
                 attrs: {
-                  id: "edit-item",
-                  tabindex: "-1",
-                  role: "dialog",
-                  "aria-labelledby": "myModalLabel"
-                }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "modal-dialog", attrs: { role: "document" } },
-                  [
-                    _c("div", { staticClass: "modal-content" }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "modal-body" }, [
+                  "show-empty": "",
+                  stacked: "md",
+                  items: _vm.items,
+                  fields: _vm.fields,
+                  "current-page": _vm.currentPage,
+                  "per-page": _vm.perPage,
+                  filter: _vm.filter,
+                  "sort-by": _vm.sortBy,
+                  "sort-desc": _vm.sortDesc
+                },
+                on: {
+                  "update:sortBy": function($event) {
+                    _vm.sortBy = $event
+                  },
+                  "update:sortDesc": function($event) {
+                    _vm.sortDesc = $event
+                  },
+                  filtered: _vm.onFiltered
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "actions",
+                    fn: function(row) {
+                      return [
                         _c(
-                          "form",
+                          "b-button",
                           {
-                            attrs: {
-                              method: "POST",
-                              enctype: "multipart/form-data"
-                            },
+                            attrs: { size: "sm" },
                             on: {
-                              submit: function($event) {
-                                $event.preventDefault()
-                                _vm.updateItem(_vm.fillItem._id)
+                              click: function($event) {
+                                $event.stopPropagation()
+                                row.toggleDetails($event)
                               }
                             }
                           },
                           [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("label", { attrs: { for: "name" } }, [
-                                _vm._v("name:")
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.fillItem.name,
-                                    expression: "fillItem.name"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", name: "name" },
-                                domProps: { value: _vm.fillItem.name },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.fillItem,
-                                      "name",
-                                      $event.target.value
+                            _vm._v(
+                              "\r\n          " +
+                                _vm._s(row.detailsShowing ? "Hide" : "Show") +
+                                " Details\r\n        "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            staticClass: "btn btn-primary",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.editItem(row.item)
+                              }
+                            }
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.deleteItem(row.item)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "row-details",
+                    fn: function(row) {
+                      return [
+                        _c("b-card", [
+                          _c("ul", [
+                            _c(
+                              "ul",
+                              { attrs: { id: "v-for-row.item.years" } },
+                              _vm._l(row.item.years, function(
+                                value,
+                                key,
+                                index
+                              ) {
+                                return _c(
+                                  "li",
+                                  _vm._b({}, "li", value, false),
+                                  [
+                                    _c("strong", [_vm._v(_vm._s(key))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "ul",
+                                      { attrs: { id: "v-for-value" } },
+                                      _vm._l(value, function(val, index) {
+                                        return _c("li", [
+                                          _c("strong", [_vm._v(_vm._s(index))]),
+                                          _vm._v(" : " + _vm._s(val))
+                                        ])
+                                      })
                                     )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.formErrorsUpdate["name"]
-                                ? _c(
-                                    "span",
-                                    { staticClass: "error text-danger" },
-                                    [
-                                      _vm._v(
-                                        "@" +
-                                          _vm._s(_vm.formErrorsUpdate["name"])
-                                      )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("label", { attrs: { for: "industry" } }, [
-                                _vm._v("industry:")
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.fillItem.industry,
-                                    expression: "fillItem.industry"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", name: "industry" },
-                                domProps: { value: _vm.fillItem.industry },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
+                                  ]
+                                )
+                              })
+                            )
+                          ])
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { md: "6" } },
+                [
+                  _c("b-pagination", {
+                    staticClass: "my-0",
+                    attrs: {
+                      "total-rows": _vm.totalRows,
+                      "per-page": _vm.perPage
+                    },
+                    model: {
+                      value: _vm.currentPage,
+                      callback: function($$v) {
+                        _vm.currentPage = $$v
+                      },
+                      expression: "currentPage"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "nav",
+            {
+              staticClass: "navbar navbar-inverse navbar-fixed-top",
+              attrs: { id: "sidebar-wrapper", role: "navigation" }
+            },
+            [
+              _c("b-row", [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "pull-right hamburger animated fadeInLeft is-open",
+                    attrs: { type: "button", "data-toggle": "offcanvas" },
+                    on: {
+                      click: function($event) {
+                        _vm.hideLeftNav()
+                      }
+                    }
+                  },
+                  [_vm._v("\r\n                X\r\n            ")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("b-row", [
+                _c("div", { staticClass: "text-center padding2" }, [
+                  _c("h4", [_vm._v("Create Item")]),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      attrs: { method: "POST", enctype: "multipart/form-data" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          _vm.createItem($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._l(_vm.newItem, function(item, index, value) {
+                        return _c("div", [
+                          index != "years"
+                            ? _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "index" } }, [
+                                  _vm._v(_vm._s(index))
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.newItem[index],
+                                      expression: "newItem[index]"
                                     }
-                                    _vm.$set(
-                                      _vm.fillItem,
-                                      "industry",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.formErrorsUpdate["industry"]
-                                ? _c(
-                                    "span",
-                                    { staticClass: "error text-danger" },
-                                    [
-                                      _vm._v(
-                                        "@" +
-                                          _vm._s(
-                                            _vm.formErrorsUpdate["industry"]
-                                          )
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", name: "index" },
+                                  domProps: { value: _vm.newItem[index] },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.newItem,
+                                        index,
+                                        $event.target.value
                                       )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.fillItem.years, function(value, key) {
-                              return _c(
-                                "div",
-                                _vm._b(
-                                  { staticClass: "form-group" },
-                                  "div",
-                                  value,
-                                  false
-                                ),
-                                [
-                                  _c("label", { attrs: { for: "year" } }, [
-                                    _vm._v(_vm._s(key))
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._l(value, function(va, ind) {
-                                    return _c(
-                                      "div",
-                                      { staticClass: "form-group" },
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.formErrors["index"]
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "error text-danger" },
                                       [
-                                        _c("p", [
-                                          _c("strong", [_vm._v(_vm._s(ind))]),
+                                        _vm._v(
+                                          "@" + _vm._s(_vm.formErrors["index"])
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          index == "years"
+                            ? _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                _vm._l(item, function(
+                                  years,
+                                  indexyears,
+                                  value
+                                ) {
+                                  return _c(
+                                    "div",
+                                    [
+                                      _c("label", { attrs: { for: "index" } }, [
+                                        _vm._v(_vm._s(indexyears))
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(years, function(year, indexvals) {
+                                        return _c("div", [
+                                          _c(
+                                            "label",
+                                            { attrs: { for: "indexvals" } },
+                                            [_vm._v(_vm._s(indexvals))]
+                                          ),
+                                          _vm._v(" "),
                                           _c("input", {
                                             directives: [
                                               {
                                                 name: "model",
                                                 rawName: "v-model",
                                                 value:
-                                                  _vm.fillItem.years[key][ind],
+                                                  _vm.newItem.years[indexyears][
+                                                    indexvals
+                                                  ],
                                                 expression:
-                                                  "fillItem.years[key][ind]"
+                                                  "newItem.years[indexyears][indexvals]"
                                               }
                                             ],
                                             staticClass: "form-control",
                                             attrs: {
                                               type: "text",
-                                              name: "fillItem.years[key][ind]"
+                                              name: "indexvals"
                                             },
                                             domProps: {
                                               value:
-                                                _vm.fillItem.years[key][ind]
+                                                _vm.newItem.years[indexyears][
+                                                  indexvals
+                                                ]
                                             },
                                             on: {
                                               input: function($event) {
@@ -56347,75 +56100,298 @@ var render = function() {
                                                   return
                                                 }
                                                 _vm.$set(
-                                                  _vm.fillItem.years[key],
-                                                  ind,
+                                                  _vm.newItem.years[indexyears],
+                                                  indexvals,
                                                   $event.target.value
                                                 )
                                               }
                                             }
-                                          })
-                                        ]),
-                                        _vm._v(" "),
-                                        _vm.formErrorsUpdate["years"]
-                                          ? _c(
-                                              "span",
-                                              {
-                                                staticClass: "error text-danger"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "@" +
-                                                    _vm._s(
-                                                      _vm.formErrorsUpdate[
-                                                        "years"
-                                                      ]
-                                                    )
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ]
-                                    )
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.formErrorsUpdate["years"]
-                                    ? _c(
-                                        "span",
-                                        { staticClass: "error text-danger" },
-                                        [
-                                          _vm._v(
-                                            "@" +
-                                              _vm._s(
-                                                _vm.formErrorsUpdate["years"]
+                                          }),
+                                          _vm._v(" "),
+                                          _vm.formErrors["indexvals"]
+                                            ? _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "error text-danger"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "@" +
+                                                      _vm._s(
+                                                        _vm.formErrors[
+                                                          "indexvals"
+                                                        ]
+                                                      )
+                                                  )
+                                                ]
                                               )
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ],
-                                2
+                                            : _vm._e()
+                                        ])
+                                      })
+                                    ],
+                                    2
+                                  )
+                                })
                               )
-                            }),
-                            _vm._v(" "),
-                            _vm._m(1)
-                          ],
-                          2
+                            : _vm._e()
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-main",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("Submit")]
                         )
                       ])
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "edit-item",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "myModalLabel"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          attrs: {
+                            method: "POST",
+                            enctype: "multipart/form-data"
+                          },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.updateItem(_vm.fillItem._id)
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "name" } }, [
+                              _vm._v("name:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fillItem.name,
+                                  expression: "fillItem.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", name: "name" },
+                              domProps: { value: _vm.fillItem.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.fillItem,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.formErrorsUpdate["name"]
+                              ? _c(
+                                  "span",
+                                  { staticClass: "error text-danger" },
+                                  [
+                                    _vm._v(
+                                      "@" + _vm._s(_vm.formErrorsUpdate["name"])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "industry" } }, [
+                              _vm._v("industry:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.fillItem.industry,
+                                  expression: "fillItem.industry"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", name: "industry" },
+                              domProps: { value: _vm.fillItem.industry },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.fillItem,
+                                    "industry",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.formErrorsUpdate["industry"]
+                              ? _c(
+                                  "span",
+                                  { staticClass: "error text-danger" },
+                                  [
+                                    _vm._v(
+                                      "@" +
+                                        _vm._s(_vm.formErrorsUpdate["industry"])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.fillItem.years, function(value, key) {
+                            return _c(
+                              "div",
+                              _vm._b(
+                                { staticClass: "form-group" },
+                                "div",
+                                value,
+                                false
+                              ),
+                              [
+                                _c("label", { attrs: { for: "year" } }, [
+                                  _vm._v(_vm._s(key))
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(value, function(va, ind) {
+                                  return _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("p", [
+                                        _c("strong", [_vm._v(_vm._s(ind))]),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.fillItem.years[key][ind],
+                                              expression:
+                                                "fillItem.years[key][ind]"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "text",
+                                            name: "fillItem.years[key][ind]"
+                                          },
+                                          domProps: {
+                                            value: _vm.fillItem.years[key][ind]
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.fillItem.years[key],
+                                                ind,
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm.formErrorsUpdate["years"]
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass: "error text-danger"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "@" +
+                                                  _vm._s(
+                                                    _vm.formErrorsUpdate[
+                                                      "years"
+                                                    ]
+                                                  )
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                }),
+                                _vm._v(" "),
+                                _vm.formErrorsUpdate["years"]
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "error text-danger" },
+                                      [
+                                        _vm._v(
+                                          "@" +
+                                            _vm._s(
+                                              _vm.formErrorsUpdate["years"]
+                                            )
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ],
+                        2
+                      )
                     ])
-                  ]
-                )
-              ]
-            )
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: "graphs" } }, [_vm._v("Graphs")])
-    ],
-    1
-  )
+                  ])
+                ]
+              )
+            ]
+          )
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {

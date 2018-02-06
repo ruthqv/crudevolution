@@ -211,7 +211,6 @@
 </div>
 </div>
 
-  <router-link to="graphs">Graphs</router-link>
 
 </div>
 </template>
