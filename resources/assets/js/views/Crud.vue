@@ -79,17 +79,17 @@
       <template slot="row-details" slot-scope="row">
         <b-card>
           <ul>
-			<ul id="v-for-row.item.years">
-			  <li  v-for="(value, key, index) in row.item.years" v-bind="value">
-<!-- 			    {{ key }} : {{value}} : {{index}}
- -->	
- 				<strong>{{ key }}</strong>
- 				<ul id="v-for-value">
-			  	<li  v-for="(val, index) in value"><strong>{{index}}</strong> : {{val}}</li>
-				</ul>
-			  </li>
+      			<ul id="v-for-row.item.years">
+      			  <li  v-for="(value, key, index) in row.item.years" v-bind="value">
+      <!-- 			    {{ key }} : {{value}} : {{index}}
+       -->	
+       				<strong>{{ key }}</strong>
+       				<ul id="v-for-value">
+      			  	<li  v-for="(val, index) in value"><strong>{{index}}</strong> : {{val}}</li>
+      				</ul>
+      			  </li>
 
-			</ul>
+      			</ul>
 
 
           </ul>
@@ -115,18 +115,28 @@
 
 		           <h4>Create Item</h4>
      		      		<form method="POST" enctype="multipart/form-data" v-on:submit.prevent="createItem">
-            		      <div class="form-group">
-            						<label for="name">name:</label>
-            						<input type="text" name="name" class="form-control" v-model="newItem.name" />
-            						<span v-if="formErrors['name']" class="error text-danger">@{{ formErrors['name'] }}</span>
-            					</div>
+                    <div  v-for="(item,index, value) in newItem">
+              		      <div class="form-group" v-if="index != 'years' ">
+              						<label for="index">{{index}}</label>
+              						<input type="text" name="index" class="form-control" v-model="newItem[index]" />
+              						<span v-if="formErrors['index']" class="error text-danger">@{{ formErrors['index'] }}</span>
+                          
+              					</div>
+                        <div class="form-group"  v-if="index == 'years' ">
+                            <div  v-for="(years, indexyears, value) in item">
+                             
+                              <label for="index">{{indexyears}}</label>
 
-            					<div class="form-group">
-            						<label for="industry">industry:</label>
-            						<textarea name="description" class="form-control" v-model="newItem.industry"></textarea>
-            						<span v-if="formErrors['industry']" class="error text-danger">@{{ formErrors['industry'] }}</span>
-            					</div>
-
+                                  <div  v-for="(year,indexvals) in years">
+                                     
+                                      <label for="indexvals">{{indexvals}}</label>
+                                      <input type="text" name="indexvals" class="form-control" v-model="newItem.years[indexyears][indexvals]" />
+                                      <span v-if="formErrors['indexvals']" class="error text-danger">@{{ formErrors['indexvals'] }}</span>
+    
+                                  </div>
+                            </div>
+                        </div>
+                      </div>
             					<div class="form-group">
             						<button type="submit" class="btn btn-main">Submit</button>
             					</div>
@@ -181,9 +191,9 @@
 						
 
 
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">Submit</button>
-					</div>
+    					<div class="form-group">
+    						<button type="submit" class="btn btn-success">Submit</button>
+    					</div>
 
 
 		      		</form>
@@ -200,13 +210,57 @@
 
 </div>
 </div>
+
+  <router-link to="graphs">Graphs</router-link>
+
 </div>
 </template>
 
 <script>
-const items = [
-  {"name": "",
-  "industry":""}]
+
+var newItem = {"name": "",
+            "industry":"",
+            "years": {"2000" : {
+                      "inversion_recived":"",
+                      "capital" : "",
+                      "sales" : "",
+                      "employees" : ""
+                    },
+
+                    "2001" : {
+                      "inversion_recived":"",
+                      "capital" : "",
+                      "sales" : "",
+                      "employees" : ""
+                    },
+                    "2002" : {
+                      "inversion_recived":"",
+                      "capital" : "",
+                      "sales" : "",
+                      "employees" : ""
+                    },
+                    "2003" : {
+                      "inversion_recived":"",
+                      "capital" : "",
+                      "sales" : "",
+                      "employees" : ""
+                    },    
+                    "2004" : {
+                      "inversion_recived":"",
+                      "capital" : "",
+                      "sales" : "",
+                      "employees" : ""
+                    },
+                    "2005" : {
+                      "inversion_recived":"",
+                      "capital" : "",
+                      "sales" : "",
+                      "employees" : ""
+                    }
+                  }   
+             }
+
+const items = [newItem]
 
 import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group';
 
@@ -216,11 +270,9 @@ export default {
     return {
       items: items,
 
-      // allyears : this.getarray(),
-
-      fillItem : {'name':'','industry':'' },
+      fillItem : newItem,
  
-      newItem : {'name':'','industry':''},
+      newItem :   newItem,
 
       formErrors:{},
    	  formErrorsUpdate:{},
@@ -322,6 +374,19 @@ export default {
         });
       },
 
+        createItem: function(){ 
+
+          var input = this.newItem;
+          console.log(this.newItem)
+    		  this.$http.post('api/crud',input).then((response) => {
+          this.items= response.data
+          this.hideLeftNav()
+          this.$refs.table.refresh();
+    		  }, (response) => {
+    			this.formErrors = response.data;
+    	    });
+	     },
+
        showLeftNav:function(){
         $('#wrapper').toggleClass('toggled');
         $('.overlay').show();
@@ -334,55 +399,7 @@ export default {
         $('.hamburger').removeClass('is-open').addClass('is-closed');
       },
 
-        createItem: function(){
-        	this.newItem.years =
-          {"2000" : {
-      			"inversion_recived":"",
-      			"capital" : "",
-      			"sales" : "",
-      			"employees" : ""
-      		},
 
-      		"2001" : {
-      			"inversion_recived":"",
-      			"capital" : "",
-      			"sales" : "",
-      			"employees" : ""
-      		},
-      		"2002" : {
-      			"inversion_recived":"",
-      			"capital" : "",
-      			"sales" : "",
-      			"employees" : ""
-      		},
-      		"2003" : {
-      			"inversion_recived":"",
-      			"capital" : "",
-      			"sales" : "",
-      			"employees" : ""
-      		},		
-      		"2004" : {
-      			"inversion_recived":"",
-      			"capital" : "",
-      			"sales" : "",
-      			"employees" : ""
-      		},
-      		"2005" : {
-      			"inversion_recived":"",
-      			"capital" : "",
-      			"sales" : "",
-      			"employees" : ""
-      		}
-        }		  
-      var input = this.newItem;
-		  this.$http.post('api/crud',input).then((response) => {
-      this.items= response.data
-      this.hideLeftNav()
-      this.$refs.table.refresh();
-		  }, (response) => {
-			this.formErrors = response.data;
-	    });
-	},
   },
   components:{
 	'b-input-group-button': bInputGroup
