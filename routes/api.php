@@ -21,4 +21,6 @@ Route::group([
 ], function () {
 	Route::resource('crudevolution','Api\CrudEvolutionController');
 	Route::resource('crud','Api\CrudController');
+	Route::get('apidatas','Api\CrudController@api');
+
 });
